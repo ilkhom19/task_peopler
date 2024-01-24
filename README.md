@@ -19,7 +19,8 @@ Before running the People-Base API, make sure you have the following prerequisit
 
 - Go (Programming language): [Installation Guide](https://golang.org/doc/install)
 - SQLite3 (Database): [Installation Guide](https://www.sqlite.org/download.html)
-
+- Goose (Database migration tool): [Installation Guide](https://github.com/pressly/goose)
+- Swagger (API documentation tool): [Installation Guide](https://github.com/swaggo/swag)
 ### Installation
 
 1. Clone the repository:
@@ -31,17 +32,18 @@ Before running the People-Base API, make sure you have the following prerequisit
 2. Change to the project directory:
 
    ```bash
-   cd People-Base-API
+   cd task_peopler
    ```
 
 3. Build and run the API:
 
    ```bash
+   swag init --pd -g cmd/main.go
    source .env && go build -o app main.go && ./app
    ```
 
-   The API will be accessible at `http://localhost:{port}/docs/index.html`.
-
+   The API will be accessible at `http://localhost:8080/docs/index.html`.
+    ![Screenshot-20240125013852-2594x1250.png](..%2F..%2FDownloads%2FScreenshot-20240125013852-2594x1250.png)
 ## Usage
 
 The API provides endpoints for managing people. You can use tools like `curl` or Postman to interact with the API. Here are some example requests:
@@ -79,11 +81,11 @@ The API provides endpoints for managing people. You can use tools like `curl` or
 - Get people by gender:
 
   ```bash
-  curl http://localhost:8080/people/gender?gender=Male&page=1&pageSize=10
+  curl http://localhost:8080/people/gender?gender=male&page=1&pageSize=10
   ```
 
 - Get people by nationality:
 
   ```bash
-  curl http://localhost:8080/people/nationality?nationality=USA&page=1&pageSize=10
+  curl http://localhost:8080/people/nationality?nationality=UZ&page=1&pageSize=10
   ```

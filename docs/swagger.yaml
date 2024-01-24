@@ -1,7 +1,373 @@
-host: http://10.121.4.116:8080
+definitions:
+  internal_transport_rest.PeopleResponse:
+    properties:
+      people:
+        items:
+          $ref: '#/definitions/task_peopler_internal_models.Person'
+        type: array
+    type: object
+  internal_transport_rest.Response:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  task_peopler_internal_models.Person:
+    properties:
+      age:
+        type: integer
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      nationality:
+        type: string
+      patronymic:
+        type: string
+    type: object
+  task_peopler_internal_models.PersonCreateInput:
+    properties:
+      first_name:
+        minLength: 2
+        type: string
+      last_name:
+        minLength: 2
+        type: string
+      patronymic:
+        type: string
+    required:
+    - first_name
+    - last_name
+    type: object
+  task_peopler_internal_models.PersonUpdateInput:
+    properties:
+      age:
+        type: integer
+      first_name:
+        minLength: 2
+        type: string
+      gender:
+        minLength: 2
+        type: string
+      last_name:
+        minLength: 2
+        type: string
+      nationality:
+        minLength: 2
+        type: string
+      patronymic:
+        type: string
+    type: object
+host: http://localhost:8080
 info:
   contact: {}
   title: People-Base API documentation
   version: 1.0.1
-paths: {}
+paths:
+  /people:
+    post:
+      consumes:
+      - application/json
+      description: Create person
+      parameters:
+      - description: Person
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/task_peopler_internal_models.PersonCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/task_peopler_internal_models.Person'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Create person
+      tags:
+      - person CRUD
+  /people/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete person
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Delete person
+      tags:
+      - person CRUD
+    get:
+      consumes:
+      - application/json
+      description: Get person
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/task_peopler_internal_models.Person'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Get person
+      tags:
+      - person CRUD
+    put:
+      consumes:
+      - application/json
+      description: Update person
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: PersonUpdateInput
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/task_peopler_internal_models.PersonUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/task_peopler_internal_models.Person'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Update person
+      tags:
+      - person CRUD
+  /people/age:
+    get:
+      consumes:
+      - application/json
+      description: Get people by age
+      parameters:
+      - description: Person Age
+        in: query
+        name: age
+        required: true
+        type: integer
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_transport_rest.PeopleResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Get people by age
+      tags:
+      - person Filter
+  /people/gender:
+    get:
+      consumes:
+      - application/json
+      description: Get people by gender
+      parameters:
+      - description: Person Gender
+        in: query
+        name: gender
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_transport_rest.PeopleResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Get people by gender
+      tags:
+      - person Filter
+  /people/name:
+    get:
+      consumes:
+      - application/json
+      description: Get people by name
+      parameters:
+      - description: Person Name
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_transport_rest.PeopleResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Get people by name
+      tags:
+      - person Filter
+  /people/nationality:
+    get:
+      consumes:
+      - application/json
+      description: Get people by nationality
+      parameters:
+      - description: Person Nationality
+        in: query
+        name: nationality
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_transport_rest.PeopleResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Get people by nationality
+      tags:
+      - person Filter
 swagger: "2.0"

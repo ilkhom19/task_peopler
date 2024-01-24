@@ -11,7 +11,7 @@ import (
 // CreatePerson ... Create person
 // @Summary Create person
 // @Description Create person
-// @Tags person
+// @Tags person CRUD
 // @Accept json
 // @Produce json
 // @Param order body models.PersonCreateInput true "Person"
@@ -19,7 +19,6 @@ import (
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
 // @Router /people [post]
-
 func (h *Handler) createPerson(w http.ResponseWriter, r *http.Request) {
 	var input models.PersonCreateInput
 
@@ -62,16 +61,15 @@ func (h *Handler) createPerson(w http.ResponseWriter, r *http.Request) {
 // UpdatePerson ... Update person
 // @Summary Update person
 // @Description Update person
-// @Tags person
+// @Tags person CRUD
 // @Accept json
 // @Produce json
 // @Param id path int true "Person ID"
-// @Param order body PersonUpdateInput true "Person"
-// @Success 200 {object} Person
+// @Param order body models.PersonUpdateInput true "PersonUpdateInput"
+// @Success 200 {object} models.Person
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/{id} [put]
-
 func (h *Handler) updatePerson(w http.ResponseWriter, r *http.Request) {
 	var input models.PersonUpdateInput
 
@@ -122,7 +120,7 @@ func (h *Handler) updatePerson(w http.ResponseWriter, r *http.Request) {
 // DeletePerson ... Delete person
 // @Summary Delete person
 // @Description Delete person
-// @Tags person
+// @Tags person CRUD
 // @Accept json
 // @Produce json
 // @Param id path int true "Person ID"
@@ -130,7 +128,6 @@ func (h *Handler) updatePerson(w http.ResponseWriter, r *http.Request) {
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/{id} [delete]
-
 func (h *Handler) deletePerson(w http.ResponseWriter, r *http.Request) {
 	id, err := getIDFromRequest(r)
 	if err != nil {
@@ -151,15 +148,14 @@ func (h *Handler) deletePerson(w http.ResponseWriter, r *http.Request) {
 // GetPerson ... Get person
 // @Summary Get person
 // @Description Get person
-// @Tags person
+// @Tags person CRUD
 // @Accept json
 // @Produce json
 // @Param id path int true "Person ID"
-// @Success 200 {object} Person
+// @Success 200 {object} models.Person
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/{id} [get]
-
 func (h *Handler) getPersonByID(w http.ResponseWriter, r *http.Request) {
 	id, err := getIDFromRequest(r)
 	if err != nil {
@@ -190,7 +186,7 @@ func (h *Handler) getPersonByID(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByName ... Get people by name
 // @Summary Get people by name
 // @Description Get people by name
-// @Tags person
+// @Tags person Filter
 // @Accept json
 // @Produce json
 // @Param name query string true "Person Name"
@@ -200,8 +196,7 @@ func (h *Handler) getPersonByID(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} Response
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
-// @Router /people [get]
-
+// @Router /people/name [get]
 func (h *Handler) getPeopleByName(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Query().Get("name")
 	page, pageSize, err := getPageAndPageSizeFromQuery(r)
@@ -233,7 +228,7 @@ func (h *Handler) getPeopleByName(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByAge ... Get people by age
 // @Summary Get people by age
 // @Description Get people by age
-// @Tags person
+// @Tags person Filter
 // @Accept json
 // @Produce json
 // @Param age query int true "Person Age"
@@ -243,8 +238,7 @@ func (h *Handler) getPeopleByName(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} Response
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
-// @Router /people [get]
-
+// @Router /people/age [get]
 func (h *Handler) getPeopleByAge(w http.ResponseWriter, r *http.Request) {
 	age, err := strconv.Atoi(r.URL.Query().Get("age"))
 	if err != nil {
@@ -282,7 +276,7 @@ func (h *Handler) getPeopleByAge(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByGender ... Get people by gender
 // @Summary Get people by gender
 // @Description Get people by gender
-// @Tags person
+// @Tags person Filter
 // @Accept json
 // @Produce json
 // @Param gender query string true "Person Gender"
@@ -294,7 +288,6 @@ func (h *Handler) getPeopleByAge(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/gender [get]
-
 func (h *Handler) getPeopleByGender(w http.ResponseWriter, r *http.Request) {
 	gender := r.URL.Query().Get("gender")
 	page, pageSize, err := getPageAndPageSizeFromQuery(r)
@@ -326,7 +319,7 @@ func (h *Handler) getPeopleByGender(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByNationality ... Get people by nationality
 // @Summary Get people by nationality
 // @Description Get people by nationality
-// @Tags person
+// @Tags person Filter
 // @Accept json
 // @Produce json
 // @Param nationality query string true "Person Nationality"
@@ -338,7 +331,6 @@ func (h *Handler) getPeopleByGender(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/nationality [get]
-
 func (h *Handler) getPeopleByNationality(w http.ResponseWriter, r *http.Request) {
 	nationality := r.URL.Query().Get("nationality")
 	page, pageSize, err := getPageAndPageSizeFromQuery(r)
