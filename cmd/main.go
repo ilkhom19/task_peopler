@@ -7,6 +7,9 @@ import (
 	"net/http"
 	"os"
 	"task_peopler/internal/config"
+	"task_peopler/internal/repository/sqlite"
+	"task_peopler/internal/service"
+	"task_peopler/pkg"
 	"task_peopler/pkg/database"
 )
 
@@ -33,21 +36,9 @@ func main() {
 	}
 	defer db.Close()
 
-	// init layers
-	usersRepo := sqlite.NewUsers(db)
-
-	usersService := service.NewUsers(
-		usersRepo,
-		tokensRepo,
-		hasher,
-		[]byte(cfg.Secrets.Salt),
-		cfg.Auth.TokenTTL,
-		emailSender,
-	)
-	timesheetService := service.NewTimesheetService(timesheetsRepo, emailSender)
-	orderService := service.NewOrderService(ordersRepo)
-	recordService := service.NewRecordService(recordsRepo)
-	dailyHoursService := service.NewDailyHoursService(dailyHoursRepo)
+	apiClient := pkg.NewAPIClient()
+	personRepo := sqlite.NewPersonRepo(db)
+	personService := service.NewPersonService(personRepo, apiClient)
 
 	handler := http.NewHandler(
 		usersService,
