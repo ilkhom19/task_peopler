@@ -31,6 +31,7 @@ type PersonUpdateInput struct {
 	LastName    string `json:"last_name"  validate:"gte=2"`
 	Patronymic  string `json:"patronymic"`
 	Age         int    `json:"age"`
+	Gender      string `json:"gender"      validate:"gte=2"`
 	Nationality string `json:"nationality" validate:"gte=2"`
 }
 
