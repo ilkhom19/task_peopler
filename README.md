@@ -39,8 +39,8 @@ Before running the People-Base API, make sure you have the following prerequisit
    source .env && go build -o app main.go && ./app
    ```
 
-   The API will be accessible at `http://localhost:8080/docs/index.html`.
-    ![Screenshot-20240125013852-2594x1250.png](..%2F..%2FDownloads%2FScreenshot-20240125013852-2594x1250.png)
+   The API will be accessible at `http://localhost:8080/docs/index.html`
+    ![Handles](handles.png)
 ## Usage
 
 The API provides endpoints for managing people. You can use tools like `curl` or Postman to interact with the API. Here are some example requests:
