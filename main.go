@@ -22,7 +22,7 @@ func init() {
 
 // @title People-Base API documentation
 // @version 1.0.1
-// @host http://localhost:8080
+// @host http://10.121.4.116:8080
 // @BasePath
 func main() {
 	cfg, err := config.NewConfig()

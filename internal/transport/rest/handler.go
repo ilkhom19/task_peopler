@@ -6,6 +6,7 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 	"net/http"
 	"strconv"
+	_ "task_peopler/docs"
 	"task_peopler/internal/models"
 )
 
