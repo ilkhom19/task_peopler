@@ -1,9 +1,10 @@
 package http
 
 import (
-	"encoding/json"
+	"errors"
 	"github.com/gorilla/mux"
 	"net/http"
+	"strconv"
 	"task_peopler/internal/models"
 )
 
@@ -34,9 +35,16 @@ func (h *Handler) InitRouter() *mux.Router {
 	return router
 }
 
-func (h *Handler) respond(w http.ResponseWriter, r *http.Request, statusCode int, data interface{}) {
-	w.WriteHeader(statusCode)
-	if data != nil {
-		_ = json.NewEncoder(w).Encode(data)
+func getIDFromRequest(r *http.Request) (int64, error) {
+	vars := mux.Vars(r)
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
+	if err != nil {
+		return 0, err
 	}
+
+	if id == 0 {
+		return 0, errors.New("id can't be 0")
+	}
+
+	return id, nil
 }
