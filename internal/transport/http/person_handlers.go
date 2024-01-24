@@ -279,4 +279,90 @@ func (h *Handler) getPeopleByAge(w http.ResponseWriter, r *http.Request) {
 	w.Write(response)
 }
 
-// GetPeopleByGender ... Get people by Gender
+// GetPeopleByGender ... Get people by gender
+// @Summary Get people by gender
+// @Description Get people by gender
+// @Tags person
+// @Accept json
+// @Produce json
+// @Param gender query string true "Person Gender"
+// @Param page query int false "Page number"
+// @Param pageSize query int false "Page size"
+// @Success 200 {array} PeopleResponse
+// @Failure 400 {object} Response
+// @Failure 404 {object} Response
+// @Failure 401 {object} Response
+// @Failure 500 {object} Response
+// @Router /people/gender [get]
+
+func (h *Handler) getPeopleByGender(w http.ResponseWriter, r *http.Request) {
+	gender := r.URL.Query().Get("gender")
+	page, pageSize, err := getPageAndPageSizeFromQuery(r)
+	if err != nil {
+		logrus.Error("getPeopleByGender error:", err)
+		WriteJSONToResponse(w, http.StatusBadRequest, "error", err.Error())
+		return
+	}
+
+	people, err := h.PersonService.GetPeopleByGender(gender, page, pageSize)
+	if err != nil {
+		logError("getPeopleByGender", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	response, err := json.Marshal(people)
+	if err != nil {
+		logError("getPeopleByGender", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(response)
+}
+
+// GetPeopleByNationality ... Get people by nationality
+// @Summary Get people by nationality
+// @Description Get people by nationality
+// @Tags person
+// @Accept json
+// @Produce json
+// @Param nationality query string true "Person Nationality"
+// @Param page query int false "Page number"
+// @Param pageSize query int false "Page size"
+// @Success 200 {array} PeopleResponse
+// @Failure 400 {object} Response
+// @Failure 404 {object} Response
+// @Failure 401 {object} Response
+// @Failure 500 {object} Response
+// @Router /people/nationality [get]
+
+func (h *Handler) getPeopleByNationality(w http.ResponseWriter, r *http.Request) {
+	nationality := r.URL.Query().Get("nationality")
+	page, pageSize, err := getPageAndPageSizeFromQuery(r)
+	if err != nil {
+		logrus.Error("getPeopleByNationality error:", err)
+		WriteJSONToResponse(w, http.StatusBadRequest, "error", err.Error())
+		return
+	}
+
+	people, err := h.PersonService.GetPeopleByNationality(nationality, page, pageSize)
+	if err != nil {
+		logError("getPeopleByNationality", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	response, err := json.Marshal(people)
+	if err != nil {
+		logError("getPeopleByNationality", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(response)
+}
