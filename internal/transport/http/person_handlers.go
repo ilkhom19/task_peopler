@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"strconv"
 	"task_peopler/internal/models"
 )
 
@@ -16,7 +17,6 @@ import (
 // @Param order body models.PersonCreateInput true "Person"
 // @Success 200 {object} models.Person
 // @Failure 404 {object} Response
-// @Failure 401 {object} Response
 // @Failure 500 {object} Response
 // @Router /people [post]
 
@@ -69,7 +69,6 @@ func (h *Handler) createPerson(w http.ResponseWriter, r *http.Request) {
 // @Param order body PersonUpdateInput true "Person"
 // @Success 200 {object} Person
 // @Failure 404 {object} Response
-// @Failure 401 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/{id} [put]
 
@@ -129,7 +128,6 @@ func (h *Handler) updatePerson(w http.ResponseWriter, r *http.Request) {
 // @Param id path int true "Person ID"
 // @Success 200 {object} Response
 // @Failure 404 {object} Response
-// @Failure 401 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/{id} [delete]
 
@@ -159,7 +157,6 @@ func (h *Handler) deletePerson(w http.ResponseWriter, r *http.Request) {
 // @Param id path int true "Person ID"
 // @Success 200 {object} Person
 // @Failure 404 {object} Response
-// @Failure 401 {object} Response
 // @Failure 500 {object} Response
 // @Router /people/{id} [get]
 
@@ -189,3 +186,97 @@ func (h *Handler) getPersonByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(response)
 }
+
+// GetPeopleByName ... Get people by name
+// @Summary Get people by name
+// @Description Get people by name
+// @Tags person
+// @Accept json
+// @Produce json
+// @Param name query string true "Person Name"
+// @Param page query int false "Page number"
+// @Param pageSize query int false "Page size"
+// @Success 200 {array} PeopleResponse
+// @Failure 400 {object} Response
+// @Failure 404 {object} Response
+// @Failure 500 {object} Response
+// @Router /people [get]
+
+func (h *Handler) getPeopleByName(w http.ResponseWriter, r *http.Request) {
+	name := r.URL.Query().Get("name")
+	page, pageSize, err := getPageAndPageSizeFromQuery(r)
+	if err != nil {
+		logrus.Error("getPeopleByName error:", err)
+		WriteJSONToResponse(w, http.StatusBadRequest, "error", err.Error())
+		return
+	}
+
+	people, err := h.PersonService.GetPeopleByName(name, page, pageSize)
+	if err != nil {
+		logError("getPeopleByName", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	response, err := json.Marshal(people)
+	if err != nil {
+		logError("getPeopleByName", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(response)
+}
+
+// GetPeopleByAge ... Get people by age
+// @Summary Get people by age
+// @Description Get people by age
+// @Tags person
+// @Accept json
+// @Produce json
+// @Param age query int true "Person Age"
+// @Param page query int false "Page number"
+// @Param pageSize query int false "Page size"
+// @Success 200 {array} PeopleResponse
+// @Failure 400 {object} Response
+// @Failure 404 {object} Response
+// @Failure 500 {object} Response
+// @Router /people [get]
+
+func (h *Handler) getPeopleByAge(w http.ResponseWriter, r *http.Request) {
+	age, err := strconv.Atoi(r.URL.Query().Get("age"))
+	if err != nil {
+		logrus.Error("getPeopleByAge error:", err)
+		WriteJSONToResponse(w, http.StatusBadRequest, "error", err.Error())
+		return
+	}
+
+	page, pageSize, err := getPageAndPageSizeFromQuery(r)
+	if err != nil {
+		logrus.Error("getPeopleByAge error:", err)
+		WriteJSONToResponse(w, http.StatusBadRequest, "error", err.Error())
+		return
+	}
+
+	people, err := h.PersonService.GetPeopleByAge(age, page, pageSize)
+	if err != nil {
+		logError("getPeopleByAge", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	response, err := json.Marshal(people)
+	if err != nil {
+		logError("getPeopleByAge", err)
+		WriteJSONToResponse(w, http.StatusInternalServerError, "error", err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(response)
+}
+
+// GetPeopleByGender ... Get people by Gender

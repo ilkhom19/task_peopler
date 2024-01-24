@@ -48,3 +48,17 @@ func getIDFromRequest(r *http.Request) (int64, error) {
 
 	return id, nil
 }
+
+func getPageAndPageSizeFromQuery(r *http.Request) (int, int, error) {
+	page, err := strconv.Atoi(r.URL.Query().Get("page"))
+	if err != nil {
+		return 0, 0, err
+	}
+
+	pageSize, err := strconv.Atoi(r.URL.Query().Get("pageSize"))
+	if err != nil {
+		return 0, 0, err
+	}
+
+	return page, pageSize, nil
+}
