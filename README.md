@@ -7,9 +7,6 @@ People-Base API is a RESTful web service for managing and retrieving information
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
 - [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Getting Started
 
