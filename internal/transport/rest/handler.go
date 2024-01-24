@@ -1,4 +1,4 @@
-package http
+package rest
 
 import (
 	"errors"
@@ -30,7 +30,15 @@ func NewHandler(personService PersonService) *Handler {
 func (h *Handler) InitRouter() *mux.Router {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/person", h.createPerson).Methods("POST")
+	router.HandleFunc("/people", h.createPerson).Methods("POST")
+	router.HandleFunc("/people/{id}", h.updatePerson).Methods("PUT")
+	router.HandleFunc("/people/{id}", h.deletePerson).Methods("DELETE")
+	router.HandleFunc("/people/{id}", h.getPersonByID).Methods("GET")
+
+	router.HandleFunc("/people/name", h.getPeopleByName).Methods("GET")
+	router.HandleFunc("/people/age", h.getPeopleByAge).Methods("GET")
+	router.HandleFunc("/people/gender", h.getPeopleByGender).Methods("GET")
+	router.HandleFunc("/people/nationality", h.getPeopleByNationality).Methods("GET")
 
 	return router
 }
