@@ -14,9 +14,9 @@ import (
 // @Produce json
 // @Param order body models.PersonCreateInput true "Person"
 // @Success 200 {object} models.Person
-// @Failure 404 {object} Response
-// @Failure 401 {object} Response
-// @Failure 500 {object} Response
+// @Failure 404
+// @Failure 401
+// @Failure 500
 // @Router /people [post]
 
 func (h *Handler) createPerson(w http.ResponseWriter, r *http.Request) {

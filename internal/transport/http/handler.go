@@ -9,6 +9,13 @@ import (
 
 type PersonService interface {
 	Create(p *models.Person) (*models.Person, error)
+	Update(p *models.Person) (*models.Person, error)
+	Delete(id int64) error
+	GetByID(id int64) (*models.Person, error)
+	GetPeopleByName(name string, page, pageSize int) ([]*models.Person, error)
+	GetPeopleByAge(age int, page, pageSize int) ([]*models.Person, error)
+	GetPeopleByGender(gender string, page, pageSize int) ([]*models.Person, error)
+	GetPeopleByNationality(nationality string, page, pageSize int) ([]*models.Person, error)
 }
 
 type Handler struct {
