@@ -3,6 +3,7 @@ package rest
 import (
 	"errors"
 	"github.com/gorilla/mux"
+	httpSwagger "github.com/swaggo/http-swagger"
 	"net/http"
 	"strconv"
 	"task_peopler/internal/models"
@@ -29,6 +30,7 @@ func NewHandler(personService PersonService) *Handler {
 
 func (h *Handler) InitRouter() *mux.Router {
 	router := mux.NewRouter()
+	router.PathPrefix("/docs").Handler(httpSwagger.WrapHandler)
 
 	router.HandleFunc("/people", h.createPerson).Methods("POST")
 	router.HandleFunc("/people/{id}", h.updatePerson).Methods("PUT")
