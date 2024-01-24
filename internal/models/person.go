@@ -16,13 +16,25 @@ type Person struct {
 	Nationality string `json:"nationality"`
 }
 
-type PersonInput struct {
+type PersonCreateInput struct {
 	FirstName  string `json:"first_name" validate:"required,gte=2"`
 	LastName   string `json:"last_name"  validate:"required,gte=2"`
 	Patronymic string `json:"patronymic"`
 }
 
-func (s *PersonInput) Validate() error {
+func (s *PersonCreateInput) Validate() error {
+	return validate.Struct(s)
+}
+
+type PersonUpdateInput struct {
+	FirstName   string `json:"first_name" validate:"gte=2"`
+	LastName    string `json:"last_name"  validate:"gte=2"`
+	Patronymic  string `json:"patronymic"`
+	Age         int    `json:"age"`
+	Nationality string `json:"nationality" validate:"gte=2"`
+}
+
+func (s *PersonUpdateInput) Validate() error {
 	return validate.Struct(s)
 }
 
