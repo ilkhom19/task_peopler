@@ -9,6 +9,7 @@ import (
 	"task_peopler/internal/config"
 	"task_peopler/internal/repository/sqlite"
 	"task_peopler/internal/service"
+	"task_peopler/internal/transport/rest"
 	"task_peopler/pkg"
 	"task_peopler/pkg/database"
 )
@@ -19,7 +20,7 @@ func init() {
 	log.SetLevel(log.InfoLevel)
 }
 
-// @title Peopler API documentation
+// @title People-Base API documentation
 // @version 1.0.1
 // @host http://localhost:8080
 // @BasePath
@@ -40,13 +41,7 @@ func main() {
 	personRepo := sqlite.NewPersonRepo(db)
 	personService := service.NewPersonService(personRepo, apiClient)
 
-	handler := http.NewHandler(
-		usersService,
-		timesheetService,
-		orderService,
-		recordService,
-		dailyHoursService,
-	)
+	handler := rest.NewHandler(personService)
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
@@ -58,11 +53,11 @@ func main() {
 
 	// init & run server
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", cfg.Server.Port),
+		Addr:    fmt.Sprintf(":%d", cfg.Port),
 		Handler: routerWithCors,
 	}
 
-	log.Info("Server has started...")
+	log.Infof("Server started on port %d", cfg.Port)
 
 	if err := srv.ListenAndServe(); err != nil {
 		log.Fatal(err)

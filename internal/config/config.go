@@ -5,7 +5,8 @@ import (
 )
 
 type Config struct {
-	DB Sqlite3
+	DB   Sqlite3
+	Port int
 }
 
 type Sqlite3 struct {
@@ -23,6 +24,7 @@ func NewConfig() (*Config, error) {
 		DB: Sqlite3{
 			Path: viper.GetString("DB_PATH"),
 		},
+		Port: viper.GetInt("PORT"),
 	}
 
 	return cfg, nil
