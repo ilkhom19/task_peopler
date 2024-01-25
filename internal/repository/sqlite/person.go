@@ -17,7 +17,7 @@ func NewPersonRepo(db *sql.DB) *PersonRepo {
 func (s *PersonRepo) Create(p *models.Person) (*models.Person, error) {
 	query := `INSERT INTO People (first_name, last_name, patronymic, age, gender, nationality) VALUES (?, ?, ?, ?, ?, ?)`
 
-	result, err := s.db.Exec(query, p.FirstName, p.FirstName, p.Patronymic, p.Age, p.Gender, p.Nationality)
+	result, err := s.db.Exec(query, p.FirstName, p.LastName, p.Patronymic, p.Age, p.Gender, p.Nationality)
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute query: %v", err)
 	}
