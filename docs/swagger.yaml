@@ -69,127 +69,6 @@ info:
   title: People-Base API documentation
   version: 1.0.1
 paths:
-  /people:
-    post:
-      consumes:
-      - application/json
-      description: Create person
-      parameters:
-      - description: Person
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/task_peopler_internal_models.PersonCreateInput'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/task_peopler_internal_models.Person'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-      summary: Create person
-      tags:
-      - person CRUD
-  /people/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete person
-      parameters:
-      - description: Person ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-      summary: Delete person
-      tags:
-      - person CRUD
-    get:
-      consumes:
-      - application/json
-      description: Get person
-      parameters:
-      - description: Person ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/task_peopler_internal_models.Person'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-      summary: Get person
-      tags:
-      - person CRUD
-    put:
-      consumes:
-      - application/json
-      description: Update person
-      parameters:
-      - description: Person ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: PersonUpdateInput
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/task_peopler_internal_models.PersonUpdateInput'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/task_peopler_internal_models.Person'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/internal_transport_rest.Response'
-      summary: Update person
-      tags:
-      - person CRUD
   /people/age:
     get:
       consumes:
@@ -370,4 +249,125 @@ paths:
       summary: Get people by nationality
       tags:
       - person Filter
+  /person:
+    post:
+      consumes:
+      - application/json
+      description: Create person
+      parameters:
+      - description: Person
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/task_peopler_internal_models.PersonCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/task_peopler_internal_models.Person'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Create person
+      tags:
+      - person CRUD
+  /person/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete person
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Delete person
+      tags:
+      - person CRUD
+    get:
+      consumes:
+      - application/json
+      description: Get person
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/task_peopler_internal_models.Person'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Get person
+      tags:
+      - person CRUD
+    put:
+      consumes:
+      - application/json
+      description: Update person
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: PersonUpdateInput
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/task_peopler_internal_models.PersonUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/task_peopler_internal_models.Person'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_transport_rest.Response'
+      summary: Update person
+      tags:
+      - person CRUD
 swagger: "2.0"

@@ -15,52 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/people": {
-            "post": {
-                "description": "Create person",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "person CRUD"
-                ],
-                "summary": "Create person",
-                "parameters": [
-                    {
-                        "description": "Person",
-                        "name": "order",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/task_peopler_internal_models.PersonCreateInput"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/task_peopler_internal_models.Person"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/internal_transport_rest.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/internal_transport_rest.Response"
-                        }
-                    }
-                }
-            }
-        },
         "/people/age": {
             "get": {
                 "description": "Get people by age",
@@ -333,7 +287,53 @@ const docTemplate = `{
                 }
             }
         },
-        "/people/{id}": {
+        "/person": {
+            "post": {
+                "description": "Create person",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person CRUD"
+                ],
+                "summary": "Create person",
+                "parameters": [
+                    {
+                        "description": "Person",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task_peopler_internal_models.PersonCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/task_peopler_internal_models.Person"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_transport_rest.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_transport_rest.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/person/{id}": {
             "get": {
                 "description": "Get person",
                 "consumes": [
