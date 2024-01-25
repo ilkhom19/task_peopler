@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "person Filter"
+                    "people Filter"
                 ],
                 "summary": "Get people by age",
                 "parameters": [
@@ -90,7 +90,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "person Filter"
+                    "people Filter"
                 ],
                 "summary": "Get people by gender",
                 "parameters": [
@@ -161,7 +161,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "person Filter"
+                    "people Filter"
                 ],
                 "summary": "Get people by name",
                 "parameters": [
@@ -226,7 +226,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "person Filter"
+                    "people Filter"
                 ],
                 "summary": "Get people by nationality",
                 "parameters": [

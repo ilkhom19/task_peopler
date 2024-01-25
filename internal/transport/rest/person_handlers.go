@@ -189,7 +189,7 @@ func (h *Handler) getPersonByID(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByName ... Get people by name
 // @Summary Get people by name
 // @Description Get people by name
-// @Tags person Filter
+// @Tags people Filter
 // @Accept json
 // @Produce json
 // @Param name query string true "Person Name"
@@ -231,7 +231,7 @@ func (h *Handler) getPeopleByName(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByAge ... Get people by age
 // @Summary Get people by age
 // @Description Get people by age
-// @Tags person Filter
+// @Tags people Filter
 // @Accept json
 // @Produce json
 // @Param age query int true "Person Age"
@@ -279,7 +279,7 @@ func (h *Handler) getPeopleByAge(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByGender ... Get people by gender
 // @Summary Get people by gender
 // @Description Get people by gender
-// @Tags person Filter
+// @Tags people Filter
 // @Accept json
 // @Produce json
 // @Param gender query string true "Person Gender"
@@ -322,7 +322,7 @@ func (h *Handler) getPeopleByGender(w http.ResponseWriter, r *http.Request) {
 // GetPeopleByNationality ... Get people by nationality
 // @Summary Get people by nationality
 // @Description Get people by nationality
-// @Tags person Filter
+// @Tags people Filter
 // @Accept json
 // @Produce json
 // @Param nationality query string true "Person Nationality"
