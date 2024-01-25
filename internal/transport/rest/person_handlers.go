@@ -18,7 +18,7 @@ import (
 // @Success 200 {object} models.Person
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
-// @Router /people [post]
+// @Router /person [post]
 func (h *Handler) createPerson(w http.ResponseWriter, r *http.Request) {
 	var input models.PersonCreateInput
 
@@ -69,7 +69,7 @@ func (h *Handler) createPerson(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} models.Person
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
-// @Router /people/{id} [put]
+// @Router /person/{id} [put]
 func (h *Handler) updatePerson(w http.ResponseWriter, r *http.Request) {
 	var input models.PersonUpdateInput
 
@@ -92,10 +92,13 @@ func (h *Handler) updatePerson(w http.ResponseWriter, r *http.Request) {
 	}
 
 	person := &models.Person{
-		ID:         id,
-		FirstName:  input.FirstName,
-		LastName:   input.LastName,
-		Patronymic: input.Patronymic,
+		ID:          id,
+		FirstName:   input.FirstName,
+		LastName:    input.LastName,
+		Patronymic:  input.Patronymic,
+		Age:         input.Age,
+		Gender:      input.Gender,
+		Nationality: input.Nationality,
 	}
 
 	person, err = h.PersonService.Update(person)
@@ -127,7 +130,7 @@ func (h *Handler) updatePerson(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} Response
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
-// @Router /people/{id} [delete]
+// @Router /person/{id} [delete]
 func (h *Handler) deletePerson(w http.ResponseWriter, r *http.Request) {
 	id, err := getIDFromRequest(r)
 	if err != nil {
@@ -155,7 +158,7 @@ func (h *Handler) deletePerson(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} models.Person
 // @Failure 404 {object} Response
 // @Failure 500 {object} Response
-// @Router /people/{id} [get]
+// @Router /person/{id} [get]
 func (h *Handler) getPersonByID(w http.ResponseWriter, r *http.Request) {
 	id, err := getIDFromRequest(r)
 	if err != nil {

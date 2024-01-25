@@ -33,10 +33,10 @@ func (h *Handler) InitRouter() *mux.Router {
 	router := mux.NewRouter()
 	router.PathPrefix("/docs").Handler(httpSwagger.WrapHandler)
 
-	router.HandleFunc("/people", h.createPerson).Methods("POST")
-	router.HandleFunc("/people/{id}", h.updatePerson).Methods("PUT")
-	router.HandleFunc("/people/{id}", h.deletePerson).Methods("DELETE")
-	router.HandleFunc("/people/{id}", h.getPersonByID).Methods("GET")
+	router.HandleFunc("/person", h.createPerson).Methods("POST")
+	router.HandleFunc("/person/{id}", h.updatePerson).Methods("PUT")
+	router.HandleFunc("/person/{id}", h.deletePerson).Methods("DELETE")
+	router.HandleFunc("/person/{id}", h.getPersonByID).Methods("GET")
 
 	router.HandleFunc("/people/name", h.getPeopleByName).Methods("GET")
 	router.HandleFunc("/people/age", h.getPeopleByAge).Methods("GET")
