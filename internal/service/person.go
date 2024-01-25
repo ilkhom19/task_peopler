@@ -24,26 +24,55 @@ func NewPersonService(repo PersonRepo, APIClient *pkg.APIClient) *PersonService 
 }
 
 func (s *PersonService) Create(p *models.Person) (*models.Person, error) {
-	age, err := s.APIClient.FetchAge(p.FirstName)
-	if err != nil {
-		log.Errorf("failed to fetch age: %v", err)
-		return nil, err
-	}
-	p.Age = age
+	ageCh := make(chan int, 1)
+	genderCh := make(chan string, 1)
+	nationalityCh := make(chan string, 1)
+	errCh := make(chan error, 3)
 
-	gender, err := s.APIClient.FetchGender(p.FirstName)
-	if err != nil {
-		log.Errorf("failed to fetch gender %v", err)
-		return nil, err
-	}
-	p.Gender = gender
+	// Fetch age concurrently
+	go func() {
+		age, err := s.APIClient.FetchAge(p.FirstName)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		ageCh <- age
+	}()
 
-	nationality, err := s.APIClient.FetchNationality(p.FirstName)
-	if err != nil {
-		log.Errorf("failed to fetch nationality %v", err)
-		return nil, err
+	// Fetch gender concurrently
+	go func() {
+		gender, err := s.APIClient.FetchGender(p.FirstName)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		genderCh <- gender
+	}()
+
+	// Fetch nationality concurrently
+	go func() {
+		nationality, err := s.APIClient.FetchNationality(p.FirstName)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		nationalityCh <- nationality
+	}()
+
+	// Wait for all concurrent fetches to complete
+	for i := 0; i < 3; i++ {
+		select {
+		case age := <-ageCh:
+			p.Age = age
+		case gender := <-genderCh:
+			p.Gender = gender
+		case nationality := <-nationalityCh:
+			p.Nationality = nationality
+		case err := <-errCh:
+			log.Errorf("failed to fetch data: %v", err)
+			return nil, err
+		}
 	}
-	p.Nationality = nationality
 
 	log.Infof("Create person: %v", p)
 	return s.repo.Create(p)
