@@ -48,19 +48,19 @@ The API provides endpoints for managing people. You can use tools like `curl` or
 - Create a new person:
 
   ```bash
-  curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "surname": "Doe"}' http://localhost:8080/people
+  curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "surname": "Doe"}' http://localhost:8080/person
   ```
 
 - Retrieve a person by ID:
 
   ```bash
-  curl http://localhost:8080/people/1
+  curl http://localhost:8080/person/1
   ```
 
 - Delete a person by ID:
 
   ```bash
-  curl -X DELETE http://localhost:8080/people/1
+  curl -X DELETE http://localhost:8080/person/1
   ```
 
 - Get people by name:
